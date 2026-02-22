@@ -7,8 +7,29 @@ pipeline {
     IMAGE_NAME  = "adon-petclinic"
     IMAGE_TAG   = "1.0.${BUILD_NUMBER}"
     FULL_IMAGE  = "${JFROG_HOST}/${DOCKER_REPO}/${IMAGE_NAME}:${IMAGE_TAG}"
+  // Common Docker CLI locations on macOS (Intel + Apple Silicon + Docker.app)
+    PATH = "/usr/local/bin:/opt/homebrew/bin:/Applications/Docker.app/Contents/Resources/bin:${env.PATH}"
+  }
+}
+
+stages {
+  stage('Verify Docker CLI') {
+    steps {
+      sh '''
+        echo "PATH=$PATH"
+        which docker || true
+        docker --version
+        docker context ls || true
+      '''
+    }
   }
 
+  stage('Build Docker Image') {
+    steps {
+      sh 'docker build -t adon-petclinic:latest .'
+    }
+  }
+}
   stages {
     stage('Checkout') { steps { checkout scm } }
 
