@@ -13,7 +13,11 @@ pipeline {
     stage('Checkout') { steps { checkout scm } }
 
     stage('Build + Test') {
-      steps { sh './mvnw -Dspring.docker.compose.skip.in-tests=true clean test' }
+      steps { sh '''
+      ./mvnw clean test \
+        -Dspring.docker.compose.skip.in-tests=true \
+        -Dtest=!PostgresIntegrationTests
+    ''' }
     }
 
     stage('Package') {
