@@ -1,39 +1,102 @@
+---
+
+## 🚀 JFrog DevSecOps CI/CD Pipeline Implementation
+
+This repository extends the standard Spring PetClinic sample application by implementing a secure CI/CD pipeline that demonstrates modern DevSecOps practices using Jenkins, Docker, Maven, and JFrog Artifactory.
+
+The purpose of this implementation is to simulate a real-world enterprise software supply chain pipeline — moving from source code commit to a production-ready container image stored in a governed artifact repository.
+
+This pipeline introduces:
+
+- Continuous Integration using Jenkins
+- Maven-based application build and test automation
+- CycloneDX Software Bill of Materials (SBOM) generation
+- Docker container image creation
+- Artifact storage and management via JFrog Artifactory
+- Supply chain security readiness for future vulnerability scanning using JFrog Xray
 
 ---
 
-# JFrog Home Assessment – Secure CI/CD Pipeline Implementation
+## 🔐 Software Supply Chain Security
 
-## Assessment Overview
+During the Maven build process, this pipeline generates a CycloneDX Software Bill of Materials (SBOM).
 
-This repository has been extended as part of the **JFrog EMEA Solutions Engineer Home Assessment** to demonstrate a secure DevSecOps CI/CD pipeline using:
+The SBOM provides:
 
-- Jenkins (CI Pipeline)
-- Docker (Containerisation)
-- JFrog Artifactory (Artifact Repository)
-- JFrog Xray (Security Scanning)
+- Full visibility into open source dependencies used in the application
+- Early identification of vulnerable or outdated components
+- Artifact-level traceability within JFrog Artifactory
+- Integration capability with JFrog Xray for vulnerability scanning and policy enforcement
 
-The objective of this implementation is to build, package, store, scan and deploy a runnable container image of the Spring Petclinic application while maintaining traceability and supply chain security best practices.
+This supports secure software supply chain practices aligned with:
+
+- DevSecOps principles  
+- Shift-left security strategies  
+- SBOM regulatory initiatives (e.g. Executive Order 14028)  
+- Secure build and release governance models  
+
+By generating the SBOM at build-time, organisations gain immediate insight into application composition prior to deployment.
 
 ---
 
-## CI/CD Architecture
+## 🏢 Business Value
 
-GitHub → Jenkins → Maven Build/Test → Docker Build → Artifactory Push → Xray Scan
+This CI/CD implementation demonstrates how organisations can:
+
+- Standardise build and release workflows across development teams  
+- Improve deployment consistency using containerised artifacts  
+- Maintain centralised artifact governance via JFrog Artifactory  
+- Enable integration with JFrog Xray for automated vulnerability scanning  
+- Support DevSecOps initiatives through SBOM generation and traceability  
+- Increase software supply chain visibility and reduce deployment risk  
+
+This aligns development and security teams around a shared, governed artifact lifecycle.
 
 ---
 
-## Pipeline Overview
+## ⚙️ CI/CD Pipeline Workflow
 
-The Jenkins pipeline performs the following automated steps:
+The Jenkins pipeline automates the following steps:
 
-1. Checkout Spring Petclinic source code
-2. Compile application using Maven
-3. Execute unit tests
-4. Package application as runnable JAR
-5. Build Docker container image
-6. Tag container image with build version
-7. Push image to JFrog Artifactory Docker repository
-8. Enable security scanning via JFrog Xray
+1. Source Code Checkout from GitHub  
+2. Maven Build and Unit Testing  
+3. CycloneDX SBOM Generation  
+4. Application Packaging  
+5. Docker Image Build  
+6. Authentication to JFrog Artifactory  
+7. Image Tagging and Push to Artifactory Docker Repository  
+
+---
+
+## 📦 Pipeline Flow Diagram
+
+```text
+GitHub Commit
+     ↓
+Jenkins CI Pipeline
+     ↓
+Maven Build + Unit Tests
+     ↓
+CycloneDX SBOM Generation
+     ↓
+Docker Image Creation
+     ↓
+JFrog Artifactory
+(Docker Image Repository)
+     ↓
+Ready for Xray Security Scanning
+```
+
+---
+
+## 🐳 Running the Container Image from JFrog Artifactory
+
+Once pushed to Artifactory, the container image can be pulled and run locally:
+
+```bash
+docker pull <your-jfrog-domain>/docker-local/adon-petclinic:<tag>
+docker run -p 8080:8080 <your-jfrog-domain>/docker-local/adon-petclinic:<tag>
+```
 
 ---
 
