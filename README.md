@@ -12,6 +12,7 @@ This pipeline introduces:
 - Docker container image creation
 - Artifact storage and management via JFrog Artifactory
 - Supply chain security readiness for future vulnerability scanning using JFrog Xray
+- Kubernetes manifests deploy the image in cluster
 
 ---
 
@@ -143,6 +144,9 @@ kubectl get pods
 kubectl port-forward svc/petclinic 8080:80
 
 Open: http://localhost:8080
+
+### If using Artifactory registry, use:
+docker pull <ARTIFACTORY_PATH>/petclinic-secure:1.0.8
 
 ---
 
