@@ -22,7 +22,7 @@ GitHub → Jenkins → Maven Build/Test → Docker Build → Artifactory Push �
 
 ---
 
-## ⚙️ Pipeline Overview
+## Pipeline Overview
 
 The Jenkins pipeline performs the following automated steps:
 
@@ -37,9 +37,9 @@ The Jenkins pipeline performs the following automated steps:
 
 ---
 
-## ▶️ Running Locally
+## Running Locally
 
-## Build Application
+#### Build Application
 
 ```bash
 ./mvnw clean package
@@ -67,8 +67,7 @@ docker run --rm -p 8080:8080 trial227jwz.jfrog.io/docker-local/adon-petclinic:1.
 
 ---
 
-
-## Kubernetes Deployment Example
+# Kubernetes Deployment Example
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -88,27 +87,21 @@ spec:
         image: trial227jwz.jfrog.io/docker-local/adon-petclinic:1.0.X
         ports:
         - containerPort: 8080
-
 ---
 
-## Security & Traceability
+# Security & Traceability
 	•	SBOM generated using CycloneDX
 	•	Container image stored in JFrog Artifactory
 	•	Image scanned using JFrog Xray
 	•	Versioned tagging for traceability
 	•	Centralised artifact management
-
-
-
 ---
 
-## Future Improvements
+# Future Improvements
 	•	Build promotion workflows
 	•	Xray policy-based quality gates
 	•	Helm chart packaging
 	•	Automated Kubernetes deployment
-
-
 
 ---
 
