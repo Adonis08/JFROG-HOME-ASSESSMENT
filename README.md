@@ -1,5 +1,3 @@
----
-
 ## 🚀 JFrog DevSecOps CI/CD Pipeline Implementation
 
 This repository extends the standard Spring PetClinic sample application by implementing a secure CI/CD pipeline that demonstrates modern DevSecOps practices using Jenkins, Docker, Maven, and JFrog Artifactory.
