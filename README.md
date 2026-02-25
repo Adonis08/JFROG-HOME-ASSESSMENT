@@ -39,14 +39,14 @@ The Jenkins pipeline performs the following automated steps:
 
 ## ▶️ Running Locally
 
-### Build Application
+## Build Application
 
 ```bash
 ./mvnw clean package
 
 ---
 
-### Build Docker Image
+## Build Docker Image
 docker build -t adon-petclinic:latest .
 
 ### Run Application
@@ -56,13 +56,13 @@ Application will be available at:
 http://localhost:8080
 
 
-### Running from JFrog Artifactory
+## Running from JFrog Artifactory
 docker login trial227jwz.jfrog.io
 
-### Pull Image
+## Pull Image
 docker pull trial227jwz.jfrog.io/docker-local/adon-petclinic:1.0.X
 
-### Run Image
+## Run Image
 docker run --rm -p 8080:8080 trial227jwz.jfrog.io/docker-local/adon-petclinic:1.0.X
 
 ---
