@@ -128,26 +128,22 @@ docker run --rm -p 8080:8080 trial227jwz.jfrog.io/docker-local/adon-petclinic:1.
 
 ---
 
-# Kubernetes Deployment Example
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: petclinic
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: petclinic
-  template:
-    metadata:
-      labels:
-        app: petclinic
-    spec:
-      containers:
-      - name: petclinic
-        image: trial227jwz.jfrog.io/docker-local/adon-petclinic:1.0.X
-        ports:
-        - containerPort: 8080
+## Kubernetes Deployment## Kubernetes Deployment
+
+Kubernetes manifests are located in `k8s/` and deploy:
+- `demo-db` (database)
+- `petclinic` (application)
+
+### Deploy
+```bash
+kubectl apply -f k8s/
+kubectl get pods
+
+### Access the App
+kubectl port-forward svc/petclinic 8080:80
+
+Open: http://localhost:8080
+
 ---
 
 # Security & Traceability
