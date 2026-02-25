@@ -1,3 +1,117 @@
+
+---
+
+# JFrog Home Assessment – Secure CI/CD Pipeline Implementation
+
+## Assessment Overview
+
+This repository has been extended as part of the **JFrog EMEA Solutions Engineer Home Assessment** to demonstrate a secure DevSecOps CI/CD pipeline using:
+
+- Jenkins (CI Pipeline)
+- Docker (Containerisation)
+- JFrog Artifactory (Artifact Repository)
+- JFrog Xray (Security Scanning)
+
+The objective of this implementation is to build, package, store, scan and deploy a runnable container image of the Spring Petclinic application while maintaining traceability and supply chain security best practices.
+
+---
+
+## CI/CD Architecture
+
+GitHub → Jenkins → Maven Build/Test → Docker Build → Artifactory Push → Xray Scan
+
+---
+
+## ⚙️ Pipeline Overview
+
+The Jenkins pipeline performs the following automated steps:
+
+1. Checkout Spring Petclinic source code
+2. Compile application using Maven
+3. Execute unit tests
+4. Package application as runnable JAR
+5. Build Docker container image
+6. Tag container image with build version
+7. Push image to JFrog Artifactory Docker repository
+8. Enable security scanning via JFrog Xray
+
+---
+
+## ▶️ Running Locally
+
+### Build Application
+
+```bash
+./mvnw clean package
+
+---
+
+### Build Docker Image
+docker build -t adon-petclinic:latest .
+
+### Run Application
+docker run --rm -p 8080:8080 adon-petclinic:latest
+
+Application will be available at:
+http://localhost:8080
+
+
+### Running from JFrog Artifactory
+docker login trial227jwz.jfrog.io
+
+### Pull Image
+docker pull trial227jwz.jfrog.io/docker-local/adon-petclinic:1.0.X
+
+### Run Image
+docker run --rm -p 8080:8080 trial227jwz.jfrog.io/docker-local/adon-petclinic:1.0.X
+
+---
+
+
+## Kubernetes Deployment Example
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      containers:
+      - name: petclinic
+        image: trial227jwz.jfrog.io/docker-local/adon-petclinic:1.0.X
+        ports:
+        - containerPort: 8080
+
+---
+
+## Security & Traceability
+	•	SBOM generated using CycloneDX
+	•	Container image stored in JFrog Artifactory
+	•	Image scanned using JFrog Xray
+	•	Versioned tagging for traceability
+	•	Centralised artifact management
+
+
+
+---
+
+## Future Improvements
+	•	Build promotion workflows
+	•	Xray policy-based quality gates
+	•	Helm chart packaging
+	•	Automated Kubernetes deployment
+
+
+
+---
+
 # Spring PetClinic Sample Application [![Build Status](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml/badge.svg)](https://github.com/spring-projects/spring-petclinic/actions/workflows/maven-build.yml)[![Build Status](https://github.com/spring-projects/spring-petclinic/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/spring-projects/spring-petclinic/actions/workflows/gradle-build.yml)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/spring-projects/spring-petclinic) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=7517918)
